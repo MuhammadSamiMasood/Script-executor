@@ -1,8 +1,8 @@
-package model;
+package com.ebricks.scriptexecutor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UIElement {
+public class UIElement{
 
     private int elementId;
     @JsonIgnore

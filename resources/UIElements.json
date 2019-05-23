@@ -1,99 +1,93 @@
 {
-  "uiElements": [
+  "steps": [
     {
-      "text": "OPEN SCRIIN B",
-      "type": "android.widget.Button",
-      "pkg": "com.ebricks.testspot.hellowworld",
-      "contentDesc": "",
-      "checkable": "false",
-      "checked": "false",
-      "clickable": "true",
-      "enabled": "true",
-      "focusable": "true",
-      "focused": "false",
-      "scrollable": "false",
-      "longClickable": "false",
-      "password": "false",
-      "selected": "false",
-      "bounds": "[263,901][578,1027]",
-      "resourceId": "",
-      "instance": "0"
+      "element": {
+        "text": "OPEN SCRIIN B",
+        "type": "android.widget.Button",
+        "pkg": "com.ebricks.testspot.hellowworld",
+        "contentDesc": "",
+        "checkable": "false",
+        "checked": "false",
+        "clickable": "true",
+        "enabled": "true",
+        "focusable": "true",
+        "focused": "false",
+        "scrollable": "false",
+        "longClickable": "false",
+        "password": "false",
+        "selected": "false",
+        "bounds": "[263,901][578,1027]",
+        "resourceId": "",
+        "instance": "0"
+      },
+      "event": {
+        "type": "tap",
+        "x": 435,
+        "y": 960
+      }
     },
+
     {
-      "text": "OPEN SACREEN C",
-      "type": "android.widget.Button",
-      "pkg": "com.ebricks.testspot.hellowworld",
-      "contentDesc": "",
-      "checkable": "false",
-      "checked": "false",
-      "clickable": "true",
-      "enabled": "true",
-      "focusable": "true",
-      "focused": "false",
-      "scrollable": "false",
-      "longClickable": "false",
-      "password": "false",
-      "selected": "false",
-      "bounds": "[263,1027][626,1153]",
-      "resourceId": "",
-      "instance": "1"
+      "element": null,
+      "event": {
+        "type": "back",
+        "x": 244,
+        "y": 1851
+      }
     },
+
     {
-      "text": "OPEN SCREEN D",
-      "type": "android.widget.Button",
-      "pkg": "com.ebricks.testspot.hellowworld",
-      "contentDesc": "",
-      "checkable": "false",
-      "checked": "false",
-      "clickable": "true",
-      "enabled": "true",
-      "focusable": "true",
-      "focused": "false",
-      "scrollable": "false",
-      "longClickable": "false",
-      "password": "false",
-      "selected": "false",
-      "bounds": "[263,1153][601,1279]",
-      "resourceId": "",
-      "instance": "2"
+      "element": {
+        "text": "OPEN SCREEN D",
+        "type": "android.widget.Button",
+        "pkg": "com.ebricks.testspot.hellowworld",
+        "contentDesc": "",
+        "checkable": "false",
+        "checked": "false",
+        "clickable": "true",
+        "enabled": "true",
+        "focusable": "true",
+        "focused": "false",
+        "scrollable": "false",
+        "longClickable": "false",
+        "password": "false",
+        "selected": "false",
+        "bounds": "[263,1153][601,1279]",
+        "resourceId": "",
+        "instance": "2"
+      },
+      "event": {
+        "type": "tap",
+        "x": 435,
+        "y": 1213
+      }
     },
+
     {
-      "text": "OPEN SCREEN E",
-      "type": "android.widget.Button",
-      "pkg": "com.ebricks.testspot.hellowworld",
-      "contentDesc": "",
-      "checkable": "false",
-      "checked": "false",
-      "clickable": "true",
-      "enabled": "true",
-      "focusable": "true",
-      "focused": "false",
-      "scrollable": "false",
-      "longClickable": "false",
-      "password": "false",
-      "selected": "false",
-      "bounds": "[263,1279][598,1405]",
-      "resourceId": "",
-      "instance": "3"
-    },
-    {
-      "text": "SHOW TOOASTT A1",
-      "type": "android.widget.Button",
-      "pkg": "com.ebricks.testspot.hellowworld",
-      "contentDesc": "",
-      "checkable": "false",
-      "checked": "false",
-      "clickable": "true",
-      "enabled": "true",
-      "focusable": "true",
-      "focused": "false",
-      "scrollable": "false",
-      "longClickable": "false",
-      "password": "false",
-      "selected": "false",
-      "bounds": "[263,1405][660,1531]",
-      "resourceId": "",
-      "instance": "4"
+      "element": {
+        "text": "OPEN SCREEN I",
+        "type": "android.widget.Button",
+        "pkg": "com.ebricks.testspot.hellowworld",
+        "contentDesc": "",
+        "checkable": "false",
+        "checked": "false",
+        "clickable": "true",
+        "enabled": "true",
+        "focusable": "true",
+        "focused": "false",
+        "scrollable": "false",
+        "longClickable": "false",
+        "password": "false",
+        "selected": "false",
+        "bounds": "[263,1279][587,1405]",
+        "resourceId": "",
+        "instance": "0"
+      },
+      "event": {
+        "type": "tap",
+        "x": 417,
+        "y": 1331
+      }
     }
   ]
 }
