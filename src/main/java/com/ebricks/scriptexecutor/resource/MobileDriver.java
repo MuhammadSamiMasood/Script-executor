@@ -1,11 +1,17 @@
 package com.ebricks.scriptexecutor.resource;
 
+import com.ebricks.scriptexecutor.config.DesiredCapabilitiesConfig;
+import com.ebricks.scriptexecutor.model.UIElement;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class MobileDriver {
 
@@ -18,22 +24,63 @@ public class MobileDriver {
         return driver;
     }
 
-    private MobileDriver() throws MalformedURLException {
+    private MobileDriver() throws IOException {
+
         desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("deviceName", "Pixel 2 API 24");
-        desiredCapabilities.setCapability("udid", "emulator-5554"); //DeviceId from "adb devices" command
-        desiredCapabilities.setCapability("platformName", "Android");
-        desiredCapabilities.setCapability("platformVersion", "7.0");
-        desiredCapabilities.setCapability("skipUnlock","true");
-        desiredCapabilities.setCapability("appPackage", "com.ebricks.testspot.hellowworld");
-        desiredCapabilities.setCapability("appActivity","com.ebricks.testspot.hellowworld.MainActivity");
-        desiredCapabilities.setCapability("noReset","false");
+        desiredCapabilities.setCapability("deviceName", DesiredCapabilitiesConfig.getInstance().getDetails().get("deviceName"));
+        desiredCapabilities.setCapability("udid", DesiredCapabilitiesConfig.getInstance().getDetails().get("udid"));
+        desiredCapabilities.setCapability("platformName", DesiredCapabilitiesConfig.getInstance().getDetails().get("platformName"));
+        desiredCapabilities.setCapability("platformVersion", DesiredCapabilitiesConfig.getInstance().getDetails().get("platformVersion"));
+        desiredCapabilities.setCapability("skipUnlock",DesiredCapabilitiesConfig.getInstance().getDetails().get("skipUnlock"));
+        desiredCapabilities.setCapability("appPackage", DesiredCapabilitiesConfig.getInstance().getDetails().get("appPackage"));
+        desiredCapabilities.setCapability("appActivity",DesiredCapabilitiesConfig.getInstance().getDetails().get("appActivity"));
+        desiredCapabilities.setCapability("noReset",DesiredCapabilitiesConfig.getInstance().getDetails().get("noReset"));
         driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
     }
 
-    public static MobileDriver getInstance() throws MalformedURLException {
+    public static MobileDriver getInstance() throws IOException {
         if (instance == null)
             instance = new MobileDriver();
         return instance;
+    }
+
+    public String getPageSource(){
+        return driver.getPageSource();
+    }
+
+    public void quit(){
+        driver.quit();
+    }
+
+    public void click(UIElement uiElement){
+        driver.findElement(By.xpath("//*[@text='" + uiElement.getText() + "']")).click();
+    }
+
+    public void back(){
+        driver.navigate().back();
+    }
+
+    public void lock(){
+        driver.lockDevice();
+    }
+
+    public void unlock(){
+        driver.unlockDevice();
+    }
+
+    public void home(){
+        driver.pressKeyCode(AndroidKeyCode.HOME);
+    }
+
+    public void launch(){
+        driver.launchApp();
+    }
+
+    public void input(UIElement uiElement, String text){
+        driver.findElement(By.xpath("//*[@text='" + uiElement.getText() + "']")).sendKeys(text);
+    }
+
+    public void doWait(){
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 }

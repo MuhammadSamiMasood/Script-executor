@@ -6,7 +6,6 @@ public class Step {
 
     @JsonProperty("element")
     private UIElement uiElement;
-    @JsonProperty("event")
     private Event event;
 
     public UIElement getUiElement() {
@@ -22,7 +21,6 @@ public class Step {
         return event;
     }
 
-    @JsonProperty("event")
     public void setEvent(Event event) {
         this.event = event;
     }

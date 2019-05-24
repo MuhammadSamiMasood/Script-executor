@@ -1,0 +1,12 @@
+{
+  "details": {
+    "deviceName": "Pixel 2 API 24",
+    "udid": "emulator-5554",
+    "platformName": "Android",
+    "platformVersion": "7.0",
+    "skipUnlock": true,
+    "appPackage": "com.coupons.ciapp",
+    "appActivity": "com.coupons.ciapp.NCActivity",
+    "noReset": false
+  }
+}

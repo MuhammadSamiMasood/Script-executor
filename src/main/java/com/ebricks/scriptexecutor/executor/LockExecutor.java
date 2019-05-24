@@ -4,19 +4,17 @@ import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
-public class TapExecutor extends StepExecutor {
+public class LockExecutor extends StepExecutor {
 
-    public TapExecutor(Step step) {
+    public LockExecutor(Step step){
         this.step = step;
     }
-
     public StepExecutorResponse execute() throws IOException {
-        MobileDriver.getInstance().click(step.getUiElement());
+        MobileDriver.getInstance().lock();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
-        stepExecutorResponse.setMessage("Element " + step.getUiElement().getText() + " is clicked");
+        stepExecutorResponse.setMessage("Mobile is locked");
         stepExecutorResponse.setStep(step);
         return stepExecutorResponse;
     }
