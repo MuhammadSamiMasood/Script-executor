@@ -4,6 +4,7 @@ import com.ebricks.scriptexecutor.processor.ScriptProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -21,7 +22,7 @@ public class Driver {
             scriptProcessor.process();
             scriptProcessor.end();
         } catch (IOException e) {
-            logger.error(e);
+            e.printStackTrace();
         } catch (SAXException e) {
             logger.error(e);
         } catch (ParserConfigurationException e) {

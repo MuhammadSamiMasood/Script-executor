@@ -1,5 +1,7 @@
 package com.ebricks.scriptexecutor.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 public class InputEvent extends Event {
 
     public InputEvent(){
@@ -8,6 +10,7 @@ public class InputEvent extends Event {
 
     private String text;
 
+    @JsonGetter
     public String getText() {
         return text;
     }

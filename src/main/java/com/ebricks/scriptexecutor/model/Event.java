@@ -1,5 +1,7 @@
 package com.ebricks.scriptexecutor.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 })
 public abstract class Event{
 
+    @JsonIgnore
     private String type;
 
     public String getType() {
