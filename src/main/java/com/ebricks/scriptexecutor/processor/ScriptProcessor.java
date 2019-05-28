@@ -7,6 +7,7 @@ import com.ebricks.scriptexecutor.executor.StepExecutorResponse;
 import com.ebricks.scriptexecutor.finder.ElementFinder;
 import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
+import com.ebricks.scriptexecutor.resource.ResultFolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ebricks.scriptexecutor.model.ScriptInputData;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ScriptProcessor {
 
@@ -25,6 +28,18 @@ public class ScriptProcessor {
     public static Logger logger = LogManager.getLogger(ScriptProcessor.class);
 
     public void init() throws IOException {
+
+        //creating timestamped folder to store results
+        String path = "resources/results/res" + (new Date().getTime());
+        new File(path).mkdir();
+        ResultFolder.setPath(path);
+
+        //creating screenshots folder in timestamped folder to store screenshot of screen before every step
+        new File(path + "/screenshots").mkdir();
+
+        //creating dom folder in timestamped folder to store page source of screen before every step
+        new File(path + "/dom").mkdir();
+
         objectMapper = new ObjectMapper();
         scriptInputData = objectMapper.readValue(new File("resources/UIElements.json"), ScriptInputData.class);
     }
@@ -32,16 +47,17 @@ public class ScriptProcessor {
     public void process() throws IOException, SAXException, ParserConfigurationException, InterruptedException {
 
         ExecutorFactory executorFactory = new ExecutorFactory();
-
+        List<StepExecutorResponse> stepExecutorResponses = new ArrayList<StepExecutorResponse>();
         for(Step step: scriptInputData.getSteps()){
             String pageSource = MobileDriver.getInstance().getPageSource();
             if(ElementFinder.find(step.getUiElement(), pageSource)){
                 StepExecutor stepExecutor = executorFactory.getStepExecutor(step);
                 StepExecutorResponse stepExecutorResponse = stepExecutor.execute();
-                logger.info(stepExecutorResponse.getMessage());
+                stepExecutorResponses.add(stepExecutorResponse);
                 Thread.sleep(1000);
             }
         }
+        objectMapper.writerWithDefaultPrettyPrinter().withRootName("stepExecutorResponses").writeValue(new File(ResultFolder.getPath() + "/response.json"), stepExecutorResponses);
     }
 
     public void end() throws IOException {

@@ -9,6 +9,7 @@ public abstract class StepExecutor {
 
     protected Step step;
 
+    public abstract void init() throws IOException;
     public abstract StepExecutorResponse execute() throws IOException;
 
 }

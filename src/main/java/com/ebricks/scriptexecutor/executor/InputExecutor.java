@@ -12,7 +12,13 @@ public class InputExecutor extends StepExecutor {
         this.step = step;
     }
 
+    public void init() throws IOException {
+        MobileDriver.getInstance().takeScreenshot();
+        MobileDriver.getInstance().getDom();
+    }
+
     public StepExecutorResponse execute() throws IOException {
+        init();
         MobileDriver.getInstance().input(step.getUiElement(), (String)step.getEvent().get());
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

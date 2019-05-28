@@ -1,9 +1,5 @@
 package com.ebricks.scriptexecutor.model;
 
-import com.ebricks.scriptexecutor.resource.MobileDriver;
-
-import java.net.MalformedURLException;
-
 public class TapEvent extends Event {
 
     public TapEvent(){

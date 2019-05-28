@@ -1,6 +1,5 @@
 package com.ebricks.scriptexecutor.executor;
 
-import com.ebricks.scriptexecutor.model.Event;
 import com.ebricks.scriptexecutor.model.Step;
 
 public class StepExecutorResponse {
