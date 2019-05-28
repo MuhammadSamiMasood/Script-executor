@@ -17,7 +17,6 @@ public class BackExecutor extends StepExecutor {
     }
 
     public StepExecutorResponse execute() throws IOException {
-        init();
         MobileDriver.getInstance().back();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

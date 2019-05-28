@@ -17,7 +17,6 @@ public class HomeExecutor extends StepExecutor {
     }
 
     public StepExecutorResponse execute() throws IOException {
-        init();
         MobileDriver.getInstance().home();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

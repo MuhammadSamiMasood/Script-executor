@@ -17,7 +17,6 @@ public class LaunchExecutor extends StepExecutor {
     }
 
     public StepExecutorResponse execute() throws IOException {
-        init();
         MobileDriver.getInstance().launch();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

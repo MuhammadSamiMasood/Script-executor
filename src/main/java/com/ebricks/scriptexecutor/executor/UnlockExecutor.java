@@ -17,7 +17,6 @@ public class UnlockExecutor extends StepExecutor {
     }
 
     public StepExecutorResponse execute() throws IOException {
-        init();
         MobileDriver.getInstance().unlock();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

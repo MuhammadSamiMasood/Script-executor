@@ -1,13 +1,17 @@
 package com.ebricks.scriptexecutor.executor;
 
+import com.ebricks.scriptexecutor.finder.ElementFinder;
 import com.ebricks.scriptexecutor.model.Step;
+import com.ebricks.scriptexecutor.model.TapEvent;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class TapExecutor extends StepExecutor {
 
+    TapEvent tapEvent;
     public TapExecutor(Step step) {
         this.step = step;
     }
@@ -17,8 +21,11 @@ public class TapExecutor extends StepExecutor {
         MobileDriver.getInstance().getDom();
     }
 
-    public StepExecutorResponse execute() throws IOException {
-        init();
+    public StepExecutorResponse execute() throws IOException, ParserConfigurationException, SAXException {
+
+        tapEvent = (TapEvent)step.getEvent();
+        step.setUiElement(ElementFinder.findByXandYCoordinates(tapEvent.getX(), tapEvent.getY(), MobileDriver.getInstance().getDriver().getPageSource()));
+
         MobileDriver.getInstance().click(step.getUiElement());
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
