@@ -1,5 +1,6 @@
 package com.ebricks.scriptexecutor.finder;
 
+import com.ebricks.scriptexecutor.generator.ElementGenerator;
 import com.ebricks.scriptexecutor.model.UIElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -50,29 +51,7 @@ public class ElementFinder {
         Document document = documentBuilder.parse(inputSource);
 
         // this list will contain all the elements in the ranges of which, the x and y coordinates fall
-        List<Element> foundElements = new ArrayList<Element>();
-
-
-        NodeList nodeList = document.getElementsByTagName("*");
-        for(int i=1; i<nodeList.getLength(); i++){
-            Node node = nodeList.item(i);
-
-            Element element = (Element)node;
-            String bounds = element.getAttribute("bounds");
-            bounds = bounds.replaceAll("\\D", ",");
-            String [] splitted = bounds.split(",");
-
-            int boundX = Integer.parseInt(splitted[1]);
-            int boundY = Integer.parseInt(splitted[2]);
-            int boundWidth = Integer.parseInt(splitted[4]);
-            int boundHeight = Integer.parseInt(splitted[5]);
-            if(x >= boundX && y >= boundY && x < boundWidth && y < boundHeight){
-
-                // adding an element in the list as x and y coordinates are found to be in its range
-                foundElements.add(element);
-            }
-
-        }
+        List<Element> foundElements = findAllWithXandYCoordinates(x, y, document);
 
         // here we will find the element with smallest width and height in the found elements:
         // ------------------------------------------------------------------------------------
@@ -97,28 +76,29 @@ public class ElementFinder {
 
         // now the requied element is found
         // now we need to convert it into a UIElement and return that UIElement
+        return ElementGenerator.generateFromDomElement(requiredElement);
+    }
 
-        UIElement uiElement = new UIElement();
-        uiElement.setBounds(requiredElement.getAttribute("bounds"));
-        uiElement.setCheckable(requiredElement.getAttribute("checkable") == "true");
-        uiElement.setChecked(requiredElement.getAttribute("checked") == "true");
-        uiElement.setClickable(requiredElement.getAttribute("clickable") == "true");
-        uiElement.setContentDesc(requiredElement.getAttribute("content-desc"));
-        uiElement.setElementId(0);
-        uiElement.setResourceId(requiredElement.getAttribute("resource-id"));
-        uiElement.setEnabled(requiredElement.getAttribute("enabled") == "true");
-        uiElement.setFocusable(requiredElement.getAttribute("focusable") == "true");
-        uiElement.setFocused(requiredElement.getAttribute("focused") == "true");
-        uiElement.setIndex(Integer.parseInt(requiredElement.getAttribute("index")));
-        uiElement.setInstance(Integer.parseInt(requiredElement.getAttribute("instance")));
-        uiElement.setLongClickable(requiredElement.getAttribute("long-clickable") == "true");
-        uiElement.setPassword(requiredElement.getAttribute("password") == "true");
-        uiElement.setPkg(requiredElement.getAttribute("package"));
-        uiElement.setScrollable(requiredElement.getAttribute("scrollable") == "true");
-        uiElement.setSelected(requiredElement.getAttribute("selected") == "true");
-        uiElement.setText(requiredElement.getAttribute("text"));
-        uiElement.setType(requiredElement.getAttribute("class"));
+    public static List<Element> findAllWithXandYCoordinates(double x, double y, Document document){
+        List<Element> foundElements = new ArrayList<Element>();
 
-        return uiElement;
+        NodeList nodeList = document.getElementsByTagName("*");
+        for(int i=1; i<nodeList.getLength(); i++){
+            Node node = nodeList.item(i);
+            Element element = (Element)node;
+            String bounds = element.getAttribute("bounds");
+            bounds = bounds.replaceAll("\\D", ",");
+            String [] splitted = bounds.split(",");
+
+            int boundX = Integer.parseInt(splitted[1]);
+            int boundY = Integer.parseInt(splitted[2]);
+            int boundWidth = Integer.parseInt(splitted[4]);
+            int boundHeight = Integer.parseInt(splitted[5]);
+            if(x >= boundX && y >= boundY && x < boundWidth && y < boundHeight){
+                // adding an element in the list as x and y coordinates are found to be in its range
+                foundElements.add(element);
+            }
+        }
+        return foundElements;
     }
 }
