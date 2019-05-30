@@ -17,7 +17,6 @@ public class WaitExecutor extends StepExecutor {
     }
 
     public StepExecutorResponse execute() throws IOException {
-        init();
         MobileDriver.getInstance().doWait();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();

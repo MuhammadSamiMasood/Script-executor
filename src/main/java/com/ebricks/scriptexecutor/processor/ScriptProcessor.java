@@ -8,11 +8,13 @@ import com.ebricks.scriptexecutor.finder.ElementFinder;
 import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
 import com.ebricks.scriptexecutor.resource.ResultFolder;
+import com.ebricks.scriptexecutor.response.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ebricks.scriptexecutor.model.ScriptInputData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class ScriptProcessor {
     private ScriptInputData scriptInputData;
     private ObjectMapper objectMapper;
     public static Logger logger = LogManager.getLogger(ScriptProcessor.class);
+    Response response;
 
     public void init() throws IOException {
 
@@ -47,20 +50,19 @@ public class ScriptProcessor {
     public void process() throws IOException, SAXException, ParserConfigurationException, InterruptedException {
 
         ExecutorFactory executorFactory = new ExecutorFactory();
-        List<StepExecutorResponse> stepExecutorResponses = new ArrayList<StepExecutorResponse>();
-        for(Step step: scriptInputData.getSteps()){
-            String pageSource = MobileDriver.getInstance().getPageSource();
-            if(ElementFinder.find(step.getUiElement(), pageSource)){
-                StepExecutor stepExecutor = executorFactory.getStepExecutor(step);
-                StepExecutorResponse stepExecutorResponse = stepExecutor.execute();
-                stepExecutorResponses.add(stepExecutorResponse);
-                Thread.sleep(1000);
-            }
+        response = new Response();
+        for (Step step : scriptInputData.getSteps()) {
+            StepExecutor stepExecutor = executorFactory.getStepExecutor(step);
+            stepExecutor.init();
+            StepExecutorResponse stepExecutorResponse = stepExecutor.execute();
+            response.getStepExecutorResponses().add(stepExecutorResponse);
+            Thread.sleep(1000);
         }
-        objectMapper.writerWithDefaultPrettyPrinter().withRootName("stepExecutorResponses").writeValue(new File(ResultFolder.getPath() + "/response.json"), stepExecutorResponses);
     }
 
+
     public void end() throws IOException {
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(ResultFolder.getPath() +"/response.json"),response);
         MobileDriver.getInstance().quit();
     }
 

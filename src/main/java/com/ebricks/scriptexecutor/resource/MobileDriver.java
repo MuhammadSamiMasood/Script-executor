@@ -26,9 +26,7 @@ public class MobileDriver {
     private static MobileDriver instance;
 
     private AndroidDriver<MobileElement> driver;
-    private DesiredCapabilities desiredCapabilities;
     private AppiumDriverLocalService service;
-    private AppiumServiceBuilder builder;
     private int screenCount;
 
     public AndroidDriver<MobileElement> getDriver() {
@@ -36,8 +34,8 @@ public class MobileDriver {
     }
 
     private MobileDriver() throws IOException {
-        if (!isServerRunnning(4723))
-            startSession();
+
+        startSession();
         createSession();
         screenCount = 0;
     }
@@ -54,12 +52,14 @@ public class MobileDriver {
 
     public void startSession() {
         //Build the Appium service
-        builder = new AppiumServiceBuilder();
+        AppiumServiceBuilder builder = new AppiumServiceBuilder();
         builder.withIPAddress("127.0.0.1");
         builder.usingPort(4723);
 
         //Start the server with the builder
         service = AppiumDriverLocalService.buildService(builder);
+        if (isServerRunnning(4723))
+            service.stop();
         service.start();
     }
 
@@ -84,7 +84,7 @@ public class MobileDriver {
     }
 
     public void createSession() throws IOException {
-        desiredCapabilities = new DesiredCapabilities();
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("deviceName", DesiredCapabilitiesConfig.getInstance().getDetails().get("deviceName"));
         desiredCapabilities.setCapability("udid", DesiredCapabilitiesConfig.getInstance().getDetails().get("udid"));
         desiredCapabilities.setCapability("platformName", DesiredCapabilitiesConfig.getInstance().getDetails().get("platformName"));
@@ -135,14 +135,14 @@ public class MobileDriver {
     }
 
     public void takeScreenshot() throws IOException {
-        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        String filename= UUID.randomUUID().toString();
-        File targetFile=new File( ResultFolder.getPath() + "/screenshots/" + screenCount + ".png");
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String filename = UUID.randomUUID().toString();
+        File targetFile = new File(ResultFolder.getPath() + "/screenshots/" + screenCount + ".png");
         FileUtils.copyFile(scrFile, targetFile);
     }
 
     public void getDom() throws IOException {
-        FileWriter fw=new FileWriter(ResultFolder.getPath() + "/dom/" + screenCount + ".xml");
+        FileWriter fw = new FileWriter(ResultFolder.getPath() + "/dom/" + screenCount + ".xml");
         fw.write(driver.getPageSource());
         fw.close();
         screenCount += 1;
