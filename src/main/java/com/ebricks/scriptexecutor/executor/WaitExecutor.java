@@ -2,6 +2,7 @@ package com.ebricks.scriptexecutor.executor;
 
 import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
+import com.ebricks.scriptexecutor.status.Status;
 
 import java.io.IOException;
 
@@ -20,8 +21,12 @@ public class WaitExecutor extends StepExecutor {
         MobileDriver.getInstance().doWait();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
-        stepExecutorResponse.setMessage("Waiting for 3 seconds");
-        stepExecutorResponse.setStep(step);
+        stepExecutorResponse.setId(step.getId());
+        stepExecutorResponse.setUiElement(step.getUiElement());
+        stepExecutorResponse.setScreen(step.getScreen());
+        Status status = new Status();
+        status.setStepStatus(true);
+        stepExecutorResponse.setStatus(status);
         return stepExecutorResponse;
     }
 }

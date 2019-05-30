@@ -2,6 +2,7 @@ package com.ebricks.scriptexecutor.executor;
 
 import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.resource.MobileDriver;
+import com.ebricks.scriptexecutor.status.Status;
 
 import java.io.IOException;
 
@@ -20,8 +21,12 @@ public class LaunchExecutor extends StepExecutor {
         MobileDriver.getInstance().launch();
 
         StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
-        stepExecutorResponse.setMessage("App is lauched");
-        stepExecutorResponse.setStep(step);
+        stepExecutorResponse.setId(step.getId());
+        stepExecutorResponse.setUiElement(step.getUiElement());
+        stepExecutorResponse.setScreen(step.getScreen());
+        Status status = new Status();
+        status.setStepStatus(true);
+        stepExecutorResponse.setStatus(status);
         return stepExecutorResponse;
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ElementFinder {
 
-    public static boolean find(UIElement uiElement, String pageSource) throws ParserConfigurationException, IOException, SAXException {
+    public static boolean findReplayUIElement(UIElement uiElement, String pageSource) throws ParserConfigurationException, IOException, SAXException {
 
         if(uiElement == null){
             return true;

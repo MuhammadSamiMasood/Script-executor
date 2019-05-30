@@ -37,7 +37,7 @@ public class MobileDriver {
 
         startSession();
         createSession();
-        screenCount = 0;
+        screenCount = 1;
     }
 
     public static MobileDriver getInstance() throws IOException {
@@ -136,15 +136,13 @@ public class MobileDriver {
 
     public void takeScreenshot() throws IOException {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String filename = UUID.randomUUID().toString();
+        //String filename = UUID.randomUUID().toString();
         File targetFile = new File(ResultFolder.getPath() + "/screenshots/" + screenCount + ".png");
         FileUtils.copyFile(scrFile, targetFile);
     }
 
     public void getDom() throws IOException {
-        FileWriter fw = new FileWriter(ResultFolder.getPath() + "/dom/" + screenCount + ".xml");
-        fw.write(driver.getPageSource());
-        fw.close();
+        FileUtils.write(new File(ResultFolder.getPath() + "/dom/" + screenCount + ".xml"), driver.getPageSource());
         screenCount += 1;
     }
 }
