@@ -13,8 +13,8 @@ public class HomeExecutor extends StepExecutor {
     }
 
     public void init() throws IOException {
-        MobileDriver.getInstance().takeScreenshot();
-        MobileDriver.getInstance().getDom();
+        MobileDriver.getInstance().takeScreenshot(step.getScreen());
+        MobileDriver.getInstance().getDom(step.getScreen());
     }
 
     public StepExecutorResponse execute() throws IOException {

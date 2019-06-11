@@ -34,7 +34,7 @@ public class ScriptProcessor {
     public void init() throws IOException {
 
         //setting path for test cases
-        TestCasesFolder.setPath("resources/testcases/testcase01/");
+        TestCasesFolder.setPath("resources/testcases/5cf113a8c5930be0e1368217/");
         //creating timestamped folder to store results
         String path = "resources/results/res" + (new Date().getTime());
         new File(path).mkdir();
@@ -54,18 +54,28 @@ public class ScriptProcessor {
 
         ExecutorFactory executorFactory = new ExecutorFactory();
         response = new Response();
-        for (Step step : scriptInputData.getSteps()) {
-            StepExecutor stepExecutor = executorFactory.getStepExecutor(step);
+//        for (Step step : scriptInputData.getSteps()) {
+        for(int i=0; i<scriptInputData.getSteps().size(); i++){
+//            StepExecutor stepExecutor = executorFactory.getStepExecutor(step);
+            StepExecutor stepExecutor = executorFactory.getStepExecutor(scriptInputData.getSteps().get(i));
+
+//            Thread.sleep(7000);
+            if(i > 0) {
+                Thread.sleep(scriptInputData.getSteps().get(i).getEvent().getEventTime() - scriptInputData.getSteps().get(i - 1).getEvent().getEventTime());
+            }else{
+                Thread.sleep(1000);
+            }
             stepExecutor.init();
             StepExecutorResponse stepExecutorResponse = stepExecutor.execute();
 
             if (stepExecutorResponse == null) {
-                break;
+                response.setStatus(false);
+                return;
             }
 
             response.getStepExecutorResponses().add(stepExecutorResponse);
-            Thread.sleep(1000);
         }
+        response.setStatus(true);
     }
 
 
@@ -73,5 +83,4 @@ public class ScriptProcessor {
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(ResultFolder.getPath() + "/response.json"), response);
         MobileDriver.getInstance().quit();
     }
-
 }

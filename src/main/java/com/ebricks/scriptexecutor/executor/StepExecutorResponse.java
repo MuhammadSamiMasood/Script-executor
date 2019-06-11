@@ -1,5 +1,6 @@
 package com.ebricks.scriptexecutor.executor;
 
+import com.ebricks.scriptexecutor.model.Event;
 import com.ebricks.scriptexecutor.model.Screen;
 import com.ebricks.scriptexecutor.model.Step;
 import com.ebricks.scriptexecutor.model.UIElement;
@@ -11,6 +12,7 @@ public class StepExecutorResponse {
     private UIElement uiElement;
     private Screen screen;
     private Status status;
+    private Event event;
 
     public int getId() {
         return id;
@@ -42,5 +44,13 @@ public class StepExecutorResponse {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

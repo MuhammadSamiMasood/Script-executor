@@ -15,34 +15,31 @@ import java.io.IOException;
 
 public class InputExecutor extends StepExecutor {
 
-    public InputExecutor(Step step){
+    public InputExecutor(Step step) {
         this.step = step;
     }
 
     public void init() throws IOException {
-        MobileDriver.getInstance().takeScreenshot();
-        MobileDriver.getInstance().getDom();
+        //MobileDriver.getInstance().takeScreenshot();
+        //MobileDriver.getInstance().getDom();
     }
 
     public StepExecutorResponse execute() throws IOException, ParserConfigurationException, SAXException {
 
         InputEvent inputEvent = (InputEvent) step.getEvent();
-        String domContent = FileUtils.readFileToString(new File(TestCasesFolder.getPath() + "dom/" + step.getScreen().getDom()));
-        step.setUiElement(ElementFinder.findByXandYCoordinates(inputEvent.getX(), inputEvent.getY(), domContent));
+        MobileDriver.getInstance().input(step.getUiElement(), inputEvent.getText());
 
-        if (ElementFinder.findReplayUIElement(step.getUiElement(), MobileDriver.getInstance().getDriver().getPageSource())) {
-            MobileDriver.getInstance().input(step.getUiElement(), inputEvent.getText());
+        StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
+        stepExecutorResponse.setId(step.getId());
+        stepExecutorResponse.setUiElement(step.getUiElement());
+        stepExecutorResponse.setScreen(step.getScreen());
+        Status status = new Status();
+        status.setStepStatus(true);
+        stepExecutorResponse.setStatus(status);
 
-            StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
-            stepExecutorResponse.setId(step.getId());
-            stepExecutorResponse.setUiElement(step.getUiElement());
-            stepExecutorResponse.setScreen(step.getScreen());
-            Status status = new Status();
-            status.setStepStatus(true);
-            stepExecutorResponse.setStatus(status);
-            return stepExecutorResponse;
-        } else {
-            return null;
-        }
+        MobileDriver.getInstance().takeScreenshot(step.getScreen());
+        MobileDriver.getInstance().getDom(step.getScreen());
+
+        return stepExecutorResponse;
     }
 }

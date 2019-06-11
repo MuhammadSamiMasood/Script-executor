@@ -20,8 +20,8 @@ public class TapExecutor extends StepExecutor {
     }
 
     public void init() throws IOException {
-        MobileDriver.getInstance().takeScreenshot();
-        MobileDriver.getInstance().getDom();
+        MobileDriver.getInstance().takeScreenshot(step.getScreen());
+        MobileDriver.getInstance().getDom(step.getScreen());
     }
 
     public StepExecutorResponse execute() throws IOException, ParserConfigurationException, SAXException {
@@ -31,7 +31,7 @@ public class TapExecutor extends StepExecutor {
         step.setUiElement(ElementFinder.findByXandYCoordinates(tapEvent.getX(), tapEvent.getY(), domContent));
 
         if(ElementFinder.findReplayUIElement(step.getUiElement(), MobileDriver.getInstance().getDriver().getPageSource())){
-            MobileDriver.getInstance().click(step.getUiElement());
+            MobileDriver.getInstance().click(step);
 
             StepExecutorResponse stepExecutorResponse = new StepExecutorResponse();
             stepExecutorResponse.setId(step.getId());
@@ -40,6 +40,7 @@ public class TapExecutor extends StepExecutor {
             Status status = new Status();
             status.setStepStatus(true);
             stepExecutorResponse.setStatus(status);
+            stepExecutorResponse.setEvent(step.getEvent());
             return stepExecutorResponse;
         }
         else{
