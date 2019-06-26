@@ -1,24 +1,56 @@
 package com.ebricks.scriptexecutor.executor;
 
+import com.ebricks.scriptexecutor.model.Event;
+import com.ebricks.scriptexecutor.model.Screen;
 import com.ebricks.scriptexecutor.model.Step;
+import com.ebricks.scriptexecutor.model.UIElement;
+import com.ebricks.scriptexecutor.status.Status;
 
 public class StepExecutorResponse {
-    private String message;
-    private Step step;
 
-    public void setMessage(String message) {
-        this.message = message;
+    private int id;
+    private UIElement uiElement;
+    private Screen screen;
+    private Status status;
+    private Event event;
+
+    public int getId() {
+        return id;
     }
 
-    public String getMessage() {
-        return message;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setStep(Step step) {
-        this.step = step;
+    public UIElement getUiElement() {
+        return uiElement;
     }
 
-    public Step getStep() {
-        return step;
+    public void setUiElement(UIElement uiElement) {
+        this.uiElement = uiElement;
+    }
+
+    public Screen getScreen() {
+        return screen;
+    }
+
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

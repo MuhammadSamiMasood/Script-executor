@@ -1,9 +1,6 @@
 package com.ebricks.scriptexecutor.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
@@ -17,10 +14,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
         @JsonSubTypes.Type(value = InputEvent.class, name = "input"),
         @JsonSubTypes.Type(value = WaitEvent.class, name = "wait")
 })
-public abstract class Event{
+@JsonIgnoreProperties(ignoreUnknown = true)
+public abstract class Event {
 
     @JsonIgnore
     private String type;
+
+    private long eventTime;
 
     public String getType() {
         return type;
@@ -30,8 +30,17 @@ public abstract class Event{
         this.type = type;
     }
 
-    public Object get(){
+    public Object get() {
         return null;
     }
+
+    public long getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(long eventTime) {
+        this.eventTime = eventTime;
+    }
+
 
 }

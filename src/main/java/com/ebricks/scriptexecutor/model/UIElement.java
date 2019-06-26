@@ -1,7 +1,9 @@
 package com.ebricks.scriptexecutor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UIElement{
 
     private int elementId;

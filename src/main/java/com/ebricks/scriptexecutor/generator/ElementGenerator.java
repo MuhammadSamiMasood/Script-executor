@@ -19,7 +19,12 @@ public class ElementGenerator {
         uiElement.setFocusable(element.getAttribute("focusable") == "true");
         uiElement.setFocused(element.getAttribute("focused") == "true");
         uiElement.setIndex(Integer.parseInt(element.getAttribute("index")));
-        uiElement.setInstance(Integer.parseInt(element.getAttribute("instance")));
+        try {
+            uiElement.setInstance(Integer.parseInt(element.getAttribute("instance")));
+        }
+        catch (NumberFormatException e){
+            uiElement.setInstance(0);
+        }
         uiElement.setLongClickable(element.getAttribute("long-clickable") == "true");
         uiElement.setPassword(element.getAttribute("password") == "true");
         uiElement.setPkg(element.getAttribute("package"));
